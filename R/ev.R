@@ -25,6 +25,7 @@
 #' @author Hector Corrada Bravo \email{hcorrada@@gmail.com}
 #' @seealso \code{frma} for normalization
 #'
+#' @references E. Alemu, H. Corrada Bravo, S. Hannenhalli (2014). Determinants of Expression Variability. Nucleic Acids Research, 42 (6), 3503-14.
 #' @export
 ev <- function(x, cutoff=NULL, plot=FALSE, ...) {
   if (!is.matrix(x) || !is.numeric(x)) {

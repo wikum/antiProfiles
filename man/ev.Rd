@@ -36,6 +36,9 @@ if (require(antiProfilesData)) {
 \author{
 Hector Corrada Bravo \email{hcorrada@gmail.com}
 }
+\references{
+E. Alemu, H. Corrada Bravo, S. Hannenhalli (2014). Determinants of Expression Variability. Nucleic Acids Research, 42 (6), 3503-14.
+}
 \seealso{
 \code{frma} for normalization
 }
