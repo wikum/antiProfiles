@@ -1,14 +1,14 @@
 Package: antiProfiles
 Maintainer: Hector Corrada Bravo <hcorrada@gmail.com>
 Author: Hector Corrada Bravo, Rafael A. Irizarry and Jeffrey T. Leek
-Version: 1.3.0
+Version: 1.3.1
 License: Artistic-2.0
 Title: Implementation of gene expression anti-profiles
 Description: Implements gene expression anti-profiles as described in Corrada
     Bravo et al., BMC Bioinformatics 2012, 13:272 doi:10.1186/1471-2105-13-272.
-Depends: R (>= 3.0), matrixStats (>= 0.5), methods (>= 2.14),
+Depends: R (>= 3.0), matrixStats (>= 0.5), methods (>= 2.14), locfit (>= 1.5)
 biocViews: GeneExpression,Classification
 Suggests: antiProfilesData, RColorBrewer
 Collate: 'AllClasses.r' 'AllGenerics.r' 'show-methods.r'
         'antiProfiles-package.r' 'ap-methods.r' 'apCounts-methods.r'
-        'apReorder-methods.r' 'apStats.r' 'accessors.r'
+        'apReorder-methods.r' 'apStats.r' 'accessors.r' 'ev.R'
