@@ -1,3 +1,31 @@
+#' Compute expression variability measure
+#' 
+#' This function computes expression variability in a way that
+#' removes dependence on mean expression.
+#' It uses a local polynomial likelihood method to estimate variance
+#' as gamma distributed around given mean expression for each probeset.
+#' This function makes this calculation using all samples in argument. To
+#' calculate expression variability for samples in different groups, call this
+#' function for each subset of columns separately.
+#'
+#' @param x matrix of gene expression, with one column per sample
+#' @param cutoff minimum expression value to be included in computation (for \code{frma} normalized data, we find 2.54 to be a good value for determining if a probeset is expressed in a given sample (default NULL)
+#' @param plot make a plot of local likelihood model using \code{smoothScatter} (default=FALSE)
+#' @param ... arguments passed to \code{smoothScatter}
+#'
+#' @return numeric vector of length equal to number of rows of \code{x}
+#'
+#' @examples
+#' if (require(antiProfilesData)) {
+#'   data(apColonData)
+#'   e <- exprs(apColonData)[,pData(apColonData)$Status=1]
+#'   ev <- ev(e, cutoff=2.54)
+#' }
+#'
+#' @author Hector Corrada Bravo \email{hcorrada@@gmail.com}
+#' @seealso \code{frma} for normalization
+#'
+#' @export
 ev <- function(x, cutoff=NULL, plot=FALSE, ...) {
   if (!is.matrix(x) || !is.numeric(x)) {
     stop("argument 'x' must be a numeric matrix") 
