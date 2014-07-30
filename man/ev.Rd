@@ -29,7 +29,7 @@ function for each subset of columns separately.
 \examples{
 if (require(antiProfilesData)) {
   data(apColonData)
-  e <- exprs(apColonData)[,pData(apColonData)$Status=1]
+  e <- exprs(apColonData)[,pData(apColonData)$Status==1]
   ev <- ev(e, cutoff=2.54)
 }
 }
