@@ -23,9 +23,9 @@
 #' with objects returned by this function.
 #' 
 #' @export
-apStats <- function(e, cl, tiss=NULL, minL=10, cutoff=5, OnCutoff=2.54)
+apStats <- function(e, cl, tiss=NULL, minL=10, cutoff=5, OnCutoff=2.54, verbose=TRUE)
   {
-    message("Getting sample indices")
+    if(verbose) message("Getting sample indices")
     cIndex0=which(cl==0)
     cIndex1=which(cl==1)
 
@@ -43,7 +43,7 @@ apStats <- function(e, cl, tiss=NULL, minL=10, cutoff=5, OnCutoff=2.54)
     if (all(L0<minL) || all(L1<minL))
       stop("Not enough samples")
 
-    message("Computing sds")
+    if(verbose) message("Computing sds")
     sd0=sapply(tIndexes0[L0>=minL],function(ind) return(matrixStats::rowSds(e[,ind])))
     sd1=sapply(tIndexes1[L1>=minL],function(ind) return(matrixStats::rowSds(e[,ind])))
 
@@ -51,7 +51,7 @@ apStats <- function(e, cl, tiss=NULL, minL=10, cutoff=5, OnCutoff=2.54)
     SD1=rowMeans(sd1) 
     stat=log2(SD1/SD0) ##the statistic 
 
-    message("Computing ranges")
+    if(verbose) message("Computing ranges")
     tMeds=sapply(tIndexes0[L0>=minL], function(ind) matrixStats::rowMedians(e[,ind]))
     tMads=sapply(seq_along(tIndexes0[L0>=minL]), function(i) matrixStats::rowMads(e[,tIndexes0[L0>=minL][[i]]], centers=tMeds[,i]))
     colnames(tMads)=colnames(tMeds)
@@ -59,16 +59,19 @@ apStats <- function(e, cl, tiss=NULL, minL=10, cutoff=5, OnCutoff=2.54)
     meds0=matrixStats::rowMedians(tMeds)
     mads0=matrixStats::rowMedians(tMads)
 
-    message("Computing tissue specificity")
+    if(verbose) message("Computing tissue specificity")
     p0=sapply(tIndexes0[L0>=minL], function(ind) rowMeans(e[,ind]>OnCutoff))
     p1=sapply(tIndexes1[L1>=minL], function(ind) rowMeans(e[,ind]>OnCutoff))
 
-    message("Computing normal tissue outside ranges")
+    if(verbose) message("Computing normal tissue outside ranges")
     xx <- .succify(e,meds0,mads0,cutoff)
     tProps0 <- sapply(tIndexes0[L0>=minL], function(ind) rowMeans(xx[,ind]))
     tProps1 <- sapply(tIndexes1[L1>=minL], function(ind) rowMeans(xx[,ind]))
     
-    message("Making probe data frame")
+    if(is.null(rownames(e))) 
+        rownames(e) = 1:nrow(e)
+
+    if(verbose) message("Making probe data frame")
     probes=data.frame(affyid=rownames(e),
       SD0=SD0,SD1=SD1,stat=stat,
       meds0=meds0,mads0=mads0,
